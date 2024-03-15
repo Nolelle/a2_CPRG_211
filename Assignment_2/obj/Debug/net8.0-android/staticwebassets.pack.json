@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\edm_h\\sait_winter_2024\\CPRG 211 OOP2\\a2_CPRG_211\\Assignment_2\\obj\\Debug\\net8.0-android\\scopedcss\\bundle\\Assignment_2.styles.css",
+      "PackagePath": "staticwebassets\\Assignment_2.styles.css"
+    },
+    {
+      "Id": "C:\\Users\\edm_h\\sait_winter_2024\\CPRG 211 OOP2\\a2_CPRG_211\\Assignment_2\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\edm_h\\sait_winter_2024\\CPRG 211 OOP2\\a2_CPRG_211\\Assignment_2\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\edm_h\\sait_winter_2024\\CPRG 211 OOP2\\a2_CPRG_211\\Assignment_2\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\edm_h\\sait_winter_2024\\CPRG 211 OOP2\\a2_CPRG_211\\Assignment_2\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\edm_h\\sait_winter_2024\\CPRG 211 OOP2\\a2_CPRG_211\\Assignment_2\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.Assignment_2.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.build.Assignment_2.props",
+      "PackagePath": "build\\Assignment_2.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.buildMultiTargeting.Assignment_2.props",
+      "PackagePath": "buildMultiTargeting\\Assignment_2.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.buildTransitive.Assignment_2.props",
+      "PackagePath": "buildTransitive\\Assignment_2.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
