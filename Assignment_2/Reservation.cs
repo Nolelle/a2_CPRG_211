@@ -13,8 +13,9 @@
         public double Cost { get; set; }
         public string? Citizenship { get; set; }
         public ReservationStatus Status { get; set; }
+        public string? FullName { get; set; }
 
-        public Reservation(string? reservationCode, string? flightCode, string? airline, double cost, string? citizenship, ReservationStatus status)
+        public Reservation(string? reservationCode, string? flightCode, string? airline, double cost, string? citizenship, ReservationStatus status, string? fullName)
         {
             ReservationCode = reservationCode;
             FlightCode = flightCode;
@@ -22,6 +23,7 @@
             Cost = cost;
             Citizenship = citizenship;
             Status = status;
+            FullName = fullName;
         }
 
     }
