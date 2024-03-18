@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Assignment_2.Data;
+using Microsoft.Extensions.Logging;
 
 namespace Assignment_2
 {
@@ -15,10 +16,14 @@ namespace Assignment_2
                 });
 
             builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddSingleton<FlightManager>();
+            builder.Services.AddSingleton<ReservationManager>();
+            builder.Services.AddSingleton<AirportManager>();
+
 
 #if DEBUG
-    		builder.Services.AddBlazorWebViewDeveloperTools();
-    		builder.Logging.AddDebug();
+            builder.Services.AddBlazorWebViewDeveloperTools();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
