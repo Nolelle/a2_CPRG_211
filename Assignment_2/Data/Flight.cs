@@ -14,10 +14,10 @@
         public string DestinationAirport { get; set; }
         public TimeSpan Time { get; set; }
         public int Price { get; set; }
-        public int Distance { get; set; }
+        public double Distance { get; set; }
         public DayOfWeek Day { get; set; }
 
-        public Flight(string flightCode, string airline, string origin, string destination, DayOfWeek day, TimeSpan time, int price, int distance)
+        public Flight(string flightCode, string airline, string origin, string destination, DayOfWeek day, TimeSpan time, int price, double distance)
         {
             FlightCode = flightCode;
             Airline = airline;

@@ -43,7 +43,7 @@
                     Enum.Parse<Assignment_2.Data.DayOfWeek>(columns[4].Trim(), true),
                     TimeSpan.Parse(columns[5].Trim()), // Arrival Time
                     int.Parse(columns[6].Trim()), // Cost 
-                    int.Parse(columns[7].Trim()) // Distance
+                    double.Parse(columns[7].Trim()) // Distance
                 );
 
                 _flights.Add(flight);

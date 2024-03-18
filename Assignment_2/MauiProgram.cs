@@ -16,9 +16,18 @@ namespace Assignment_2
                 });
 
             builder.Services.AddMauiBlazorWebView();
-            builder.Services.AddSingleton<FlightManager>();
-            builder.Services.AddSingleton<ReservationManager>();
-            builder.Services.AddSingleton<AirportManager>();
+
+            var airportManager = new AirportManager();
+            airportManager.LoadAirportsFromFile("C:\\Users\\edm_h\\sait_winter_2024\\CPRG 211 OOP2\\a2_CPRG_211\\Assignment_2\\airports.csv");
+            builder.Services.AddSingleton<AirportManager>(airportManager);
+
+            var flightManager = new FlightManager();
+            flightManager.LoadFlightsFromCsv("C:\\Users\\edm_h\\sait_winter_2024\\CPRG 211 OOP2\\a2_CPRG_211\\Assignment_2\\flights.csv");
+            builder.Services.AddSingleton<FlightManager>(flightManager);
+
+            //var reservationManager = new ReservationManager();
+            //reservationManager.LoadReservationsFromCsv("path_to_your_reservations_csv_file.csv");
+            //builder.Services.AddSingleton<ReservationManager>(reservationManager);
 
 
 #if DEBUG
