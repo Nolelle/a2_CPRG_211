@@ -2,11 +2,218 @@
 @using Assignment_2.Data
 @inject FlightManager FlightManager
 @inject AirportManager AirportManager
+@inject ReservationManager ReservationManager
 
-<h1>Flight Finder</h1>
+<h3>Flight Finder</h3>
+
+<label for="fromAirport">From:</label>
+<select id="fromAirport" @bind="searchModel.From">
+    @foreach (var airport in airports)
+    {
+        <option value="@airport.Code">@airport.Code - @airport.Name</option>
+    }
+</select>
+
+<label for="toAirport">To:</label>
+<select id="toAirport" @bind="searchModel.To">
+    @foreach (var airport in airports)
+    {
+        <option value="@airport.Code">@airport.Code - @airport.Name</option>
+    }
+</select>
+
+<label for="dayOfWeek">Day:</label>
+<select id="dayOfWeek" @bind="searchModel.Day">
+    @foreach (var day in Enum.GetValues(typeof(Assignment_2.Data.DayOfWeek)))
+    {
+        <option value="@day">@day</option>
+    }
+</select>
+
+<button class="btn btn-primary" @onclick="FindFlights">Find Flights</button>
+@if (!string.IsNullOrWhiteSpace(flightSuccessMessage))
+{
+    <div>@flightSuccessMessage</div>
+
+    <h3>Flights</h3>
+    <label for="foundFlights">Select Flight:</label>
+    <select id="foundFlights" @onchange="OnFlightSelected">
+        <option disabled selected value="">Select a flight...</option>
+        @foreach (var flight in foundFlights)
+        {
+           <option value="@flight.FlightCode">Flight Number: @flight.FlightCode, Airline Name: @flight.Airline, Departure Airport: @flight.OriginAirport, Arrival Airport: @flight.DestinationAirport, Day: @flight.Day, Cost: @flight.Price.ToString("C"), Flight Time: @flight.Distance</option>
+        }
+    </select>
+
+    @if (selectedFlight != null)
+    {
+        <h3>Reserve</h3>
+		<label for="flightCode">Flight Code:</label>
+		<input id="flightCode" value="@selectedFlight.FlightCode" readonly />
+
+		<label for="airline">Airline:</label>
+		<input id="airline" value="@selectedFlight.Airline" readonly />
+
+		<label for="day">Day:</label>
+		<input id="day" value="@selectedFlight.Day.ToString()" readonly />
+
+		<label for="time">Time:</label>
+		<input id="time" value="@selectedFlight.Time.ToString(@"hh\:mm")" readonly />
+
+		<label for="cost">Cost:</label>
+		<input id="cost" value="@selectedFlight.Price.ToString("C")" readonly />
+
+        <label for="firstName">First Name:</label>
+		<input id="firstName" @bind="reservationModel.FirstName" />
+
+		<label for="lastName">Last Name:</label>
+		<input id="lastName" @bind="reservationModel.LastName" />
+
+		<label for="citizenship">Citizenship:</label>
+		<input id="citizenship" @bind="reservationModel.Citizenship" />
+
+		<button class="btn btn-success" @onclick="MakeReservation">Make Reservation</button>
+
+        <div>@reservationSuccessMessage</div>
+
+        <h3>Search</h3>
+		<label for="searchCode">Code:</label>
+		<input id="searchCode" @bind="reservationSearchModel.Code" required />
+
+		<label for="searchAirline">Airline:</label>
+		<input id="searchAirline" @bind="reservationSearchModel.Airline" />
+
+		<label for="searchName">Name:</label>
+		<input id="searchName" @bind="reservationSearchModel.Name" />
+
+		<button class="btn btn-primary" @onclick="FindReservations">Find Reservations</button>
+
+		<div>@searchReservationSucessMessage </div>
+
+		<h3>Reservations</h3>
+		<select id="foundReservations" @onchange="OnReservationSelected">
+		<option disabled selected value="">Select a reservation...</option>
+		@foreach (var reservation in searchReservationResults)
+		{
+			<option value="@reservation.ReservationCode">@($"Reservation Code: {reservation.ReservationCode}, Airline: {reservation.Airline}, Name: {reservation.FirstName} {reservation.LastName}, Citizenship: {reservation.Citizenship}")</option>
+		}
+		</select>
+
+		<div>@selectedReservationSucessMessage </div>
+
+    }
+ }
 
 
 @code {
+	private FlightSearchModel searchModel = new FlightSearchModel();
+    private List<Airport> airports = new List<Airport>();
+    private List<Flight> foundFlights = new List<Flight>();
+    private string flightSuccessMessage; 
+    private string reservationSuccessMessage; 
+    private string searchReservationSucessMessage;
+	private string selectedReservationSucessMessage;
+    private Flight selectedFlight = null;
+    private string selectedFlightCode;
+    private NewReservationModel reservationModel = new NewReservationModel(); 
+    private ReservationSearchModel reservationSearchModel = new ReservationSearchModel();
+    private List<Reservation> searchReservationResults = new List<Reservation>();
+	private Reservation selectedReservation;
 
-}
+
+
+
+	protected override void OnInitialized()
+    {
+        airports = AirportManager.GetAirports();
+    }
+
+    private void FindFlights()
+    {
+        foundFlights = FlightManager.FindFlights(searchModel.From, searchModel.To, searchModel.Day.ToString());
+        if (foundFlights.Any())
+        {
+            flightSuccessMessage = "Flight found!";
+        }
+        else
+        {
+            flightSuccessMessage = "No flights found.";
+            foundFlights.Clear();        }
+    }
+
+     private void OnFlightSelected(ChangeEventArgs e)
+    {
+        selectedFlightCode = e.Value.ToString();
+        selectedFlight = foundFlights.FirstOrDefault(flight => flight.FlightCode == selectedFlightCode);
+    }
+
+
+    private void MakeReservation()
+	{
+		if (selectedFlight != null && !string.IsNullOrWhiteSpace(reservationModel.FirstName) && !string.IsNullOrWhiteSpace(reservationModel.LastName) && !string.IsNullOrWhiteSpace(reservationModel.Citizenship))
+		{
+			try
+			{
+				var newReservation = ReservationManager.makeReservation(
+					selectedFlight,
+					reservationModel.FirstName,
+					reservationModel.LastName,
+					reservationModel.Citizenship
+				);
+
+				reservationSuccessMessage = "Reservation successful! Your reservation code is " + newReservation.ReservationCode;
+			}
+			catch (Exception ex)
+			{
+				reservationSuccessMessage = $"Failed to make reservation: {ex.Message}";
+			}
+		}
+		else
+		{
+			reservationSuccessMessage = "Please fill in your first name, last name, and citizenship.";
+		}
+	}
+
+    private void FindReservations()
+	{
+		if (!string.IsNullOrWhiteSpace(reservationSearchModel.Code))
+		{
+			searchReservationResults = ReservationManager.FindReservations(
+				reservationSearchModel.Code,
+				reservationSearchModel.Airline,
+				null,
+				null 
+			);
+
+			if (searchReservationResults.Any())
+			{
+				 searchReservationSucessMessage = $"{searchReservationResults.Count} reservation(s) found.";
+			}
+			else
+			{
+				 searchReservationSucessMessage= "No reservations found.";
+			}
+		}
+		else
+		{
+			 searchReservationSucessMessage = "Code is required for searching reservations.";
+		}
+	}
+
+	private void OnReservationSelected(ChangeEventArgs e)
+	{
+		var reservationCode = e.Value.ToString();
+		selectedReservation = searchReservationResults.FirstOrDefault(res => res.ReservationCode == reservationCode);
+
+		if (selectedReservation != null)
+		{
+			selectedReservationSucessMessage = $"Selected reservation: {selectedReservation.ReservationCode}";
+		}
+		else
+		{
+			selectedReservationSucessMessage = "No reservation selected.";
+		}
+	}
+
+  }
 

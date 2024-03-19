@@ -25,9 +25,8 @@ namespace Assignment_2
             flightManager.LoadFlightsFromCsv("C:\\Users\\edm_h\\sait_winter_2024\\CPRG 211 OOP2\\a2_CPRG_211\\Assignment_2\\flights.csv");
             builder.Services.AddSingleton<FlightManager>(flightManager);
 
-            //var reservationManager = new ReservationManager();
-            //reservationManager.LoadReservationsFromCsv("path_to_your_reservations_csv_file.csv");
-            //builder.Services.AddSingleton<ReservationManager>(reservationManager);
+            var reservationManager = new ReservationManager();
+            builder.Services.AddSingleton<ReservationManager>(reservationManager);
 
 
 #if DEBUG

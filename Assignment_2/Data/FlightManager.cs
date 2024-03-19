@@ -22,7 +22,6 @@
             }
             else
             {
-                // If the day parameter is not valid, return an empty list
                 return new List<Flight>();
             }
         }
