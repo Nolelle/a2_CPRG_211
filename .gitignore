@@ -52,3 +52,36 @@ Thumbs.db
 
 # .zip files
 *.zip
+
+# MAUI Specific
+bin/
+obj/
+.vs/
+
+# .NET Core
+*.user
+*.suo 
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+_ReSharper.Caches/
+
+# Logs, databases, etc.
+*.log
+*.db
+*.sqlite
+
+# IDEs
+.idea/
+*.sln.ide*
+
+# NuGet
+**/packages/
+*.nupkg
+*.snupkg
+
+# Other
+*.publishsettings
+.DS_Store
+Thumbs.db
