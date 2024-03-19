@@ -1,5 +1,4 @@
-﻿using System.Runtime.Serialization.Formatters.Binary;
-#pragma warning disable SYSLIB0011
+﻿#pragma warning disable SYSLIB0011
 
 namespace Assignment_2.Data
 {
@@ -98,44 +97,6 @@ namespace Assignment_2.Data
             reservationToUpdate.LastName = lastName;
             reservationToUpdate.Citizenship = citizenship;
             reservationToUpdate.Status = status;
-
-            SaveReservations();
-        }
-        public void SaveReservations()
-        {
-            // Path to your binary file
-            string filePath = "reservations.bin";
-
-            // Create a BinaryFormatter and FileStream to write to the file
-            using (FileStream fs = new FileStream(filePath, FileMode.Create))
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-
-                // Serialize the reservations list to the file
-                formatter.Serialize(fs, _reservations);
-            }
-        }
-
-        public void LoadReservations()
-        {
-            string filePath = "reservations.bin";
-
-            // Check if the file exists to avoid FileNotFoundException
-            if (File.Exists(filePath))
-            {
-                using (FileStream fs = new FileStream(filePath, FileMode.Open))
-                {
-                    BinaryFormatter formatter = new BinaryFormatter();
-
-                    // Deserialize the list from the file
-                    _reservations = (List<Reservation>)formatter.Deserialize(fs);
-                }
-            }
-            else
-            {
-                // Initialize with an empty list if the file does not exist
-                _reservations = new List<Reservation>();
-            }
         }
 
     }
